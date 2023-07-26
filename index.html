@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Imports-->
+
+    <!--FIM Imports-->
+    <link rel="stylesheet" href="modulo scss/style.css" />
+    <title>Desenvolvimento Web</title>
+  </head>
+  <body id="bodyId">
+    <header>
+      <div class="logo">
+        <img src="images/logo/POKEDEX.png" alt="" />
+      </div>
+
+      <nav>
+        <div id="burguer" class="burguer">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+
+        <ul id="menu">
+          <li><a href="#!">Home</a></li>
+          <li><a href="#!">Contact</a></li>
+          <li><a href="#!">Pokedex</a></li>
+          <li><a href="#!">Teams</a></li>
+          <li><a href="#!">About</a></li>
+        </ul>
+      </nav>
+
+      <button id="abrePoke" class="btn-login">Abrir PDX</button>
+      <div id="noturno" class="ligth-dark-mode"></div>
+    </header>
+
+    <main>
+      <div class="container-carrousel">
+        <span id="next">></span>
+        <span id="prev"><</span>
+
+        <div id="first" class="slide-1">
+          <p>Conheça e duele com qualquer pessoa do mundo</p>
+        </div>
+        <div id="second" class="slide-2">
+          <p>Conheça e duele com qualquer pessoa do mundo</p>
+        </div>
+        <div id="thirdy" class="slide-3">
+          <p>Conheça e duele com qualquer pessoa do mundo</p>
+        </div>
+      </div>
+      <div id="overlay" class="overlay" onclick="fechaMenu()"></div>
+
+      <div id="pokedex" class="pokedex active">
+        <button onclick="fechaPokedex()">X</button>
+        <ul>
+          <h1>CADASTRE SEU POKEMON <button>Novo Pokemon</button></h1>
+          <li>
+            <div class="nome-poke">
+              <div class="perfil-poke"></div>
+                <p>Insira o nome do pokemon</p>
+            </div>
+            .
+
+
+          </li>
+        </ul>
+
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <script src="script/index.js"></script>
+    <!--JAVASCRIPT-->
+  </body>
+</html>
