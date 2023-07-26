@@ -1,0 +1,265 @@
+/*--------------------------RESPONSIVIDADE GERAL----------------------------------*/
+@media screen and (max-width: 480px) {
+  header {
+    .logo {
+      width: 30%;
+      img {
+        height: 40%;
+      }
+    }
+
+    nav {
+      .burguer {
+        width: 30px;
+        height: 25px;
+        visibility: visible;
+        opacity: 1;
+        right: 30px;
+      }
+
+      ul {
+        position: absolute;
+        visibility: hidden;
+        opacity: 0;
+        width: 0;
+        height: calc(100vh - 12vh);
+        right: 0;
+        top: 12vh;
+        flex-direction: column;
+        align-items: center;
+        background-color: $puddin-bg-menu-open-lgh-mode;
+        gap: 20px;
+        overflow: hidden;
+        z-index: 10000;
+        li {
+          margin-top: 30px;
+          width: 100%;
+          text-align: center;
+          a {
+            font-size: 1rem;
+          }
+        }
+
+        &.active {
+          width: 100%;
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+
+    .btn-login {
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+      right: 0;
+      transition-duration: 400ms;
+      z-index: 10000;
+
+      &:hover {
+        background-color: $puddin-button-header-lgh-mode-hover;
+      }
+
+      &.active {
+        visibility: visible;
+        opacity: 1;
+        top: calc(100vh - 12vh);
+        right: 20px;
+      }
+    }
+
+    .ligth-dark-mode {
+      visibility: hidden;
+      opacity: 0;
+      top: 13vh;
+      right: 0;
+      transition-duration: 800ms;
+      z-index: 10000;
+
+      &.active {
+        visibility: visible;
+        opacity: 1;
+        right: 80%;
+      }
+    }
+  }
+
+  main {
+    .container-carrousel {
+      #next {
+        width: 50px;
+        font-size: 2rem;
+        right: 0;
+        transform: translateY(-50%);
+      }
+
+      #prev {
+        width: 50px;
+        font-size: 2rem;
+        left: 0;
+        transform: translateY(-50%);
+      }
+
+      .slide-1, .slide-2, .slide-3 {
+        background-position: center;
+
+            p{
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 100px;
+                line-height: normal;
+                font-size: 1rem;
+            }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 900px) {
+  /* tablets */
+  header {
+    .logo {
+      width: 35%;
+      img {
+        width: 90%;
+      }
+    }
+
+    nav {
+      .burguer {
+        visibility: visible;
+        opacity: 1;
+        right: 30px;
+        z-index: 10000;
+      }
+
+      ul {
+        position: absolute;
+        visibility: hidden;
+        opacity: 0;
+        width: 0;
+        height: calc(100vh - 12vh);
+        right: 0;
+        top: 12vh;
+        flex-direction: column;
+        align-items: center;
+        background-color: $puddin-bg-menu-open-lgh-mode;
+        gap: 20px;
+        overflow: hidden;
+        z-index: 10000;
+        li {
+          margin-top: 30px;
+          text-align: center;
+          width: 100%;
+          a {
+            font-size: 1.3rem;
+          }
+        }
+
+        &.active {
+          width: 50%;
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+
+    .btn-login {
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+      right: 0;
+      top: calc(100vh - 12vh);
+      transition-duration: 400ms;
+      z-index: 10000;
+
+      &.active {
+        visibility: visible;
+        opacity: 1;
+        top: calc(100vh - 12vh);
+        right: 20px;
+      }
+    }
+
+    .ligth-dark-mode {
+      visibility: hidden;
+      opacity: 0;
+      top: 12vh;
+      right: 0;
+      transition-duration: 600ms;
+      z-index: 10000;
+
+      &.active {
+        visibility: visible;
+        opacity: 1;
+        right: 40%;
+      }
+    }
+  }
+
+  main {
+    .container-carrousel {
+      #next {
+        width: 50px;
+        font-size: 2rem;
+        right: 0;
+        transform: translateY(-50%);
+      }
+
+      #prev {
+        width: 50px;
+        font-size: 2rem;
+        left: 0;
+        transform: translateY(-50%);
+      }
+
+      .slide-1, .slide-2, .slide-3 {
+        background-position: center;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 901px) {
+  //tablet maior / desktop
+  header {
+    nav {
+      ul {
+        width: 60%;
+        gap: 5px;
+        li {
+          a {
+            display: inline;
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+  }
+
+  main {
+    .container-carrousel {
+      #next {
+        width: 50px;
+        font-size: 2rem;
+        right: 0;
+        transform: translateY(-50%);
+      }
+
+      #prev {
+        width: 50px;
+        font-size: 2rem;
+        left: 0;
+        transform: translateY(-50%);
+      }
+
+      .slide-1, .slide-2, .slide-3 {
+        background-position: center;
+        background-size: 100%;
+      }
+    }
+  }
+}
+
+/*--------------------------------------------------------------------------------*/
