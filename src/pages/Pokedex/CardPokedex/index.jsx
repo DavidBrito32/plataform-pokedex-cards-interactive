@@ -1,21 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { typesImage } from "./assets/icones tipos";
+import axios from "axios";
+import { typesImagePokedex } from "./assets/icones tipos";
 import { corDoCard, corDoType } from "./defineCor";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import pokebola from "./assets/pokebola.svg";
 import { useEffect, useState, useContext } from "react";
-import { HooksContext } from "../../context";
+import { HooksContext } from "../../../context/index";
 
 const ContainerCard = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   align-items: end;
-  transition-duration: 400ms;
-  position: relative;
 
   & .containerInternal {
     display: flex;
@@ -25,7 +24,6 @@ const ContainerCard = styled.div`
     justify-content: space-between;
     border-radius: 12px;
     position: relative;
-
     & .texto {
       width: 40%;
       height: 100%;
@@ -40,17 +38,15 @@ const ContainerCard = styled.div`
         gap: 7px;
         & .tipo1 {
           background-color: ${(props) => props.$type};
-          
         }
         & .tipo2 {
           background-color: ${(props) => props.$type1};
-          
         }
         & span {
           display: flex;
           justify-content: space-around;
           align-items: center;
-          width: 100px;
+          width: 92px;
           height: 31px;
           border-radius: 8px;
           overflow: hidden;
@@ -221,68 +217,66 @@ const ContainerCard = styled.div`
     }
   }
 `;
-
-const CardPokemon = (props) => {
+const CardPokedex = (props) => {
   const { setPokebola, pokebola, addOrExclui } = useContext(HooksContext);
-  const [gotcha, setGotcha] = useState(false);
   const ImagePokemonType = (tipo) => {
     switch (tipo) {
       case "grass":
-        return typesImage[9];
+        return typesImagePokedex[9];
 
       case "poison":
-        return typesImage[13];
+        return typesImagePokedex[13];
 
       case "fire":
-        return typesImage[7];
+        return typesImagePokedex[7];
 
       case "flying":
-        return typesImage[6];
+        return typesImagePokedex[6];
 
       case "water":
-        return typesImage[17];
+        return typesImagePokedex[17];
 
       case "bug":
-        return typesImage[0];
+        return typesImagePokedex[0];
 
       case "normal":
-        return typesImage[12];
+        return typesImagePokedex[12];
 
       case "dark":
-        return typesImage[1];
+        return typesImagePokedex[1];
 
       case "dragon":
-        return typesImage[2];
+        return typesImagePokedex[2];
 
       case "electric":
-        return typesImage[3];
+        return typesImagePokedex[3];
 
       case "fairy":
-        return typesImage[4];
+        return typesImagePokedex[4];
 
       case "fighting":
-        return typesImage[5];
+        return typesImagePokedex[5];
 
       case "ghost":
-        return typesImage[8];
+        return typesImagePokedex[8];
 
       case "ground":
-        return typesImage[10];
+        return typesImagePokedex[10];
 
       case "ice":
-        return typesImage[11];
+        return typesImagePokedex[11];
 
       case "psychic":
-        return typesImage[14];
+        return typesImagePokedex[14];
 
       case "rock":
-        return typesImage[15];
+        return typesImagePokedex[15];
 
       case "steel":
-        return typesImage[16];
+        return typesImagePokedex[16];
 
       default:
-        return typesImage[0];
+        return typesImagePokedex[0];
     }
   };
 
@@ -301,6 +295,11 @@ const CardPokemon = (props) => {
   const [cardColor, setCardColor] = useState("");
   const [corDoTipo1, setCorDoTipo1] = useState("");
   const [corDoTipo2, setCorDoTipo2] = useState("");
+  const getPokemons = async () => {
+    const response = await fetch(url, { method: "GET" });
+    const result = await response.json();
+    setPokemon(result);
+  };
 
   const formatarNumero = (numero) => {
     if (numero === 0) {
@@ -316,28 +315,16 @@ const CardPokemon = (props) => {
     }
   };
 
-  const adicionaNaPokebola = () => {
-    setGotcha(true);
-    const poke = pokebola.find((item) => {
-      return item.name === props.infos.name;
-    });
-    if (poke === undefined) {
-      setPokebola([...pokebola, props.infos]);
-
-    } else {
-      console.log("Pokemon ja esta na pokebola");
-      setGotcha(true);
-    }
+  const excluiPokemon = () => {
+    const filtrado = pokebola.filter((item) => item.name !== name);
+    setPokebola(filtrado);
+    alert("Pokemon removido");
+    getPokemons();
   };
 
   useEffect(() => {
-    const getPokemons = async () => {
-      const response = await fetch(url, { method: "GET" });
-      const result = await response.json();
-      setPokemon(result);
-    };
     getPokemons();
-  }, []);
+  }, [url]);
 
   useEffect(() => {
     if (
@@ -389,12 +376,12 @@ const CardPokemon = (props) => {
           </div>
           <div className="botoes">
             <Link to="/">Detalhes</Link>
-            <button onClick={adicionaNaPokebola}>Capturar</button>
+            <button className="excluir" onClick={excluiPokemon}>
+              Excluir
+            </button>
           </div>
           <div className="imagem">
-            <div className="fundo">
-
-            </div>
+            <div className="fundo"></div>
             <img
               src={`https://www.serebii.net/swordshield/pokemon/${formatarNumero(
                 pokemon.id
@@ -408,4 +395,4 @@ const CardPokemon = (props) => {
   );
 };
 
-export default CardPokemon;
+export default CardPokedex;

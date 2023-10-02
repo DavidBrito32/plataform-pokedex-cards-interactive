@@ -71,12 +71,8 @@ const ContainerHome = styled.div`
 `;
 
 const Home = () => {
-    const { pokemons, pokebola } = useContext(HooksContext);
-    useEffect(()=>{
-        if(pokebola.lenght > 0){
-            localStorage.setItem('pokebola', JSON.stringify(pokebola));
-        }
-    },[pokebola])
+    const { pokemons, pokebola, setIdPokemon, idPokemon } = useContext(HooksContext);
+
      return (
         <>
             <ContainerHome>                
@@ -84,11 +80,9 @@ const Home = () => {
                     <ul>
                          {pokemons.map((item, i) => {
                             return (
-                                <>
-                                    <li key={item.nome}>
-                                        <CardPokemon id={i} infos={item} />              
+                                    <li key={i}>
+                                        <CardPokemon infos={item} />              
                                     </li>
-                                </>
                             )
                          })}                 
                     </ul>
