@@ -6,14 +6,14 @@ import { useContext, useEffect, useState } from "react";
 import { HooksContext } from "../../context/HooksProvider";
 import { useParams } from "react-router-dom";
 import { typesImage } from "../../components/CardPokemon/Support/Assets";
-import {
-  defineColorCard,
-  defineColorType,
-} from "../../components/CardPokemon/Support";
-
 import { useRequestData } from "../../hooks/useRequestData";
 
-import {ColorCard, ColorType, strongCalc, powerFullProgress} from "../../services/Support_Functions";
+import {
+  ColorCard,
+  ColorType,
+  strongCalc,
+  powerFullProgress,
+} from "../../services/Support_Functions";
 import LoadingStats from "../../components/loadindStats";
 
 const PokemonDetails = () => {
@@ -35,8 +35,8 @@ const PokemonDetails = () => {
       details.types.length > 0 &&
       details.types[0].type.name
     ) {
-      setCorDoCard(defineColorCard(details.types[0].type.name));
-      setCorDoTipo1(defineColorType(details.types[0].type.name));
+      setCorDoCard(ColorCard(details.types[0].type.name));
+      setCorDoTipo1(ColorType(details.types[0].type.name));
       setImageType1(defineImageType(details.types[0].type.name));
       setType1(details.types[0].type.name);
     }
@@ -48,7 +48,7 @@ const PokemonDetails = () => {
       details.types[1] &&
       details.types[1].type.name
     ) {
-      setCorDoTipo2(defineColorType(details.types[1].type.name));
+      setCorDoTipo2(ColorType(details.types[1].type.name));
       setImageType2(defineImageType(details.types[1].type.name));
       setType2(details.types[1].type.name);
     }
@@ -115,10 +115,11 @@ const PokemonDetails = () => {
     }
   };
 
-  let pontos = []
-  const baseStats = details && details.stats.map((item) => pontos = [...pontos, item.base_stat])
+  let pontos = [];
+  details &&
+    details.stats.map((item) => (pontos = [...pontos, item.base_stat]));
 
-  const powerFull = pontos.reduce((acumulador, atual) =>  acumulador + atual, 0);
+  const powerFull = pontos.reduce((acumulador, atual) => acumulador + atual, 0);
 
   console.log(powerFull);
 
@@ -132,81 +133,88 @@ const PokemonDetails = () => {
         {loading && <LoadingStats />}
         {error && <p>Ocorreu um erro</p>}
         {details && (
-        <>
-          <h1>Detalhes</h1>
-          <div className="bg">
-            <img src={bg} alt="" />
-          </div>
-          <div className="pokemonInfos">
-            <div className="background"></div>
-            <div className="sprites">
-              <div className="bloco">
-                {details && (
-                  <img src={details.sprites.front_default} alt="front_default" />
-                )}
-              </div>
-  
-              <div className="bloco">
-                {details && (
-                  <img src={details.sprites.back_default} alt="back_default" />
-                )}
-              </div>
+          <>
+            <h1>Detalhes</h1>
+            <div className="bg">
+              <img src={bg} alt="" />
             </div>
-  
-            <div className="base_stats">
-              <ul>
-                <h3>Base stats</h3>
-  
-                {details &&
-                  details.stats.map((item, i) => (
-                    <Li key={i} $barra={`${item.base_stat}`}>
-                      <h4>{item.stat.name}</h4> <span>{item.base_stat}</span>{" "}
-                      <div className="progress">
-                        <div className="status"></div>
-                      </div>
-                    </Li>
-                  ))}
-                <Li $total={powerFull} $barra={powerFull}>
-                  <h4>{"Total"}</h4> <span>{powerFull}</span>
-                      <div className="progress">
-                        <div className="status total"></div>
-                      </div>
-                </Li>
-              </ul>
-            </div>
-  
-            <div className="poke">
-              <h3>#{id}</h3>
-              <h2>{pokeDetails.name}</h2>
-              <div className="types">
-                {imageType1 && (
-                  <span className="type1">
-                    <img src={imageType1} alt="img" />
-                    {type1}
-                  </span>
-                )}
-                {imageType2 && (
-                  <span className="type2">
-                    <img src={imageType2} alt="img" />
-                    {type2}
-                  </span>
-                )}
+            <div className="pokemonInfos">
+              <div className="background"></div>
+              <div className="sprites">
+                <div className="bloco">
+                  {details && (
+                    <img
+                      src={details.sprites.front_default}
+                      alt="front_default"
+                    />
+                  )}
+                </div>
+
+                <div className="bloco">
+                  {details && (
+                    <img
+                      src={details.sprites.back_default}
+                      alt="back_default"
+                    />
+                  )}
+                </div>
               </div>
-  
-              <div className="moves">
-                <h2>Moves: </h2>
-                {details && details.moves.map((moviment, i) => (
-                  <span key={i}>{moviment.move.name}</span>
-                ))}
+
+              <div className="base_stats">
+                <ul>
+                  <h3>Base stats</h3>
+
+                  {loading ||
+                    details.stats.map((item, i) => (
+                      <Li key={i} $barra={`${item.base_stat}`}>
+                        <h4>{item.stat.name}</h4> <span>{item.base_stat}</span>{" "}
+                        <div className="progress">
+                          <div className="status"></div>
+                        </div>
+                      </Li>
+                    ))}
+                  <Li $total={powerFull} $barra={powerFull}>
+                    <h4>{"Total"}</h4> <span>{powerFull}</span>
+                    <div className="progress">
+                      <div className="status total"></div>
+                    </div>
+                  </Li>
+                </ul>
               </div>
+
+              <div className="poke">
+                <h3>#{id}</h3>
+                <h2>{pokeDetails.name}</h2>
+                <div className="types">
+                  {imageType1 && (
+                    <span className="type1">
+                      <img src={imageType1} alt="img" />
+                      {type1}
+                    </span>
+                  )}
+                  {imageType2 && (
+                    <span className="type2">
+                      <img src={imageType2} alt="img" />
+                      {type2}
+                    </span>
+                  )}
+                </div>
+
+                <div className="moves">
+                  <h2>Moves: </h2>
+                  {details &&
+                    details.moves.map((moviment, i) => (
+                      <span key={i}>{moviment.move.name}</span>
+                    ))}
+                </div>
+              </div>
+
+              <img
+                className="pokemon"
+                src={`https://www.serebii.net/swordshield/pokemon/${id}.png`}
+                alt="pokemon"
+              />
             </div>
-  
-            <img
-              className="pokemon"
-              src={`https://www.serebii.net/swordshield/pokemon/${id}.png`}
-              alt="pokemon"
-            />
-          </div>
           </>
         )}
       </ContainerDetails>
@@ -216,7 +224,7 @@ const PokemonDetails = () => {
 
 const ContainerDetails = styled.div`
   width: 100%;
-  height: calc(100vh - 10rem);
+  /* min-height: 130vh; */
   background-color: #5e5e5e;
   padding: 0 25px;
   display: flex;
@@ -224,6 +232,7 @@ const ContainerDetails = styled.div`
   overflow: hidden;
   position: relative;
   transition-duration: 400ms;
+  padding-bottom: 80px;
 
   & h1 {
     color: white;
@@ -266,8 +275,8 @@ const ContainerDetails = styled.div`
       position: absolute;
       top: -100px;
       right: 0;
-      width: 270px;
-      height: 270px;
+      width: 300px;
+      height: 300px;
     }
 
     & .background {
@@ -407,16 +416,15 @@ const ContainerDetails = styled.div`
           font-size: 14px;
         }
 
-        &::-webkit-scrollbar{
+        &::-webkit-scrollbar {
           width: 10px;
-          background-color: ${(props) => props.$type2 || "#242466"}; 
+          background-color: ${(props) => props.$type2 || "#242466"};
         }
-        &::-webkit-scrollbar-thumb{
+        &::-webkit-scrollbar-thumb {
           width: 10px;
           border-radius: 8px;
-          background-color: ${(props) => props.$type1 || "#242466"}; 
+          background-color: ${(props) => props.$type1 || "#242466"};
         }
-
       }
     }
   }
@@ -451,9 +459,10 @@ const ContainerDetails = styled.div`
       }
 
       & .pokemon {
-        width: 150px;
-        height: 150px;
+        width: 180px;
+        height: 180px;
         top: -60px;
+        right: 0;
       }
 
       & .poke {
@@ -468,9 +477,9 @@ const ContainerDetails = styled.div`
           flex-wrap: wrap;
           justify-content: center;
 
-            & h2{
-              width: 100%;
-            }
+          & h2 {
+            width: 100%;
+          }
         }
       }
 
@@ -517,9 +526,9 @@ const ContainerDetails = styled.div`
       align-items: center;
 
       & .pokemon {
-        width: 150px;
-        height: 150px;
-        top: -60px;
+        width: 220px;
+        height: 220px;
+        top: -80px;
       }
 
       & .poke {
@@ -534,15 +543,15 @@ const ContainerDetails = styled.div`
           flex-wrap: wrap;
           justify-content: center;
 
-            & h2{
-              width: 100%;
-            }
+          & h2 {
+            width: 100%;
+          }
         }
       }
 
       & .base_stats {
         width: 95%;
-        height: 300px;
+        height: 330px;
         padding: 5px;
         margin: 0;
       }
@@ -563,8 +572,6 @@ const ContainerDetails = styled.div`
   }
 
   @media only screen and (min-width: 769px) and (max-width: 1024px) {
-    height: auto;
-
     & .pokemonInfos {
       width: 90%;
       margin: 0;
@@ -601,9 +608,54 @@ const ContainerDetails = styled.div`
           flex-wrap: wrap;
           justify-content: center;
 
-            & h2{
-              width: 100%;
-            }
+          & h2 {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 1025px) {
+    & .pokemonInfos {
+      width: 90%;
+      margin: 0 auto;
+      gap: 10px;
+      flex-wrap: nowrap;
+
+      & .pokemon {
+        width: 220px;
+        height: 220px;
+        margin: 0;
+      }
+
+      & .sprites {
+        width: 30%;
+        margin: 0;
+
+        & .bloco {
+          height: 40%;
+        }
+      }
+
+      & .base_stats {
+        width: 40%;
+        margin: 0;
+      }
+
+      & .poke {
+        width: 30%;
+        margin: 0;
+
+        & .moves {
+          padding: 10px;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+
+          & h2 {
+            width: 100%;
+          }
         }
       }
     }
@@ -639,14 +691,15 @@ const Li = styled.li`
     background-color: #5e5e5e25;
 
     & .status {
-      width: calc(100 * ${(props) => props.$barra / 100 + "%" || "0%"});
+      /* width: calc(100 * ${(props) => props.$barra / 100 + "%" || "0%"}); */
+      width: calc(1 * ${(props) => Math.min(props.$barra, 100) || 0}%);
       border-radius: 12px;
       background-color: ${(props) => strongCalc(props.$barra)};
       height: 100%;
       transition-duration: 400ms;
 
-      &.total{
-        width: calc(${(props => (props.$total / 10 + "%") || "50%" )});
+      &.total {
+        width: calc(${(props) => props.$total / 10 + "%" || "50%"});
         background-color: ${(props) => powerFullProgress(props.$barra)};
       }
     }

@@ -1,24 +1,48 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Logo from "./Assets/Logo.svg";
+import Logo from "./assets/pokemon.svg";
 import { useContext } from "react";
 import { HooksContext } from "../../context/HooksProvider";
 
 const Header = () => {
-  const { page, alteraPage } = useContext(HooksContext);
+  const {
+    page,
+    alteraPage,
+    detailsVerify,
+    addPokedex,
+    delPokemon,
+    pokeDetails,
+    setDetailsVerify,
+    btnPokemon,
+    setBtnPokemon
+  } = useContext(HooksContext);
+  const mudaPage = (directory) => {
+    alteraPage(directory);
+    setBtnPokemon(false);
+    localStorage.setItem("btnPokemon", JSON.stringify(false));
+  };
+
+  const excluiPokemon = (poke) => {
+    delPokemon(poke);
+    setDetailsVerify(!detailsVerify);
+    localStorage.setItem("detailsVerify", JSON.stringify(false));
+  };
+  const AddPokemon = (poke) => {
+    addPokedex(poke);
+    setDetailsVerify(!detailsVerify);
+    localStorage.setItem("detailsVerify", JSON.stringify(true));
+  };
 
   return (
     <>
       <HeaderContainer>
         <div className="home">
-
           {page === "pokedex" && (
-            <Link to={"/"} onClick={() => alteraPage("home")}>
+            <Link to={"/"} onClick={() => mudaPage("home")}>
               {" "}
               <span></span> Todos os Pokémons
             </Link>
           )}
-
         </div>
 
         <div className="logo">
@@ -27,9 +51,17 @@ const Header = () => {
 
         <div className="pokedex">
           {page === "home" && (
-            <Link onClick={() => alteraPage("pokedex")} to={"/pokedex"}>
+            <Link onClick={() => mudaPage("pokedex")} to={"/pokedex"}>
               Pokédex
             </Link>
+          )}
+
+          {btnPokemon && detailsVerify && (
+            <Link className="excluir" onClick={() => excluiPokemon(pokeDetails)}>Excluir</Link>
+          )}
+
+          {btnPokemon && !detailsVerify && (
+            <Link className="adicionar" onClick={() => AddPokemon(pokeDetails)}>Adicionar</Link>
           )}
         </div>
       </HeaderContainer>
@@ -94,61 +126,71 @@ const HeaderContainer = styled.header`
       font-size: 1.8rem;
       line-height: 36px;
       color: white;
-      transition-duration: 200ms;
+      transition-duration: 400ms;
       &:hover {
         background-color: #1f8cd9;
       }
       &:active {
         scale: 0.97;
       }
+
+      &.adicionar{
+        transition-duration: 400ms;
+        background-color: #529600;
+        transition-delay: 100ms;
+      }
+
+      &.excluir{
+        transition-duration: 400ms;
+        background-color: red;
+        transition-delay: 100ms;
+      }
     }
   }
 
-  @media only screen and (max-width: 480px){
+  @media only screen and (max-width: 480px) {
     height: 5rem;
     padding: 0 10px;
     gap: 20px;
 
-    & .home{
+    & .home {
       width: 8rem;
-      & a{
-        font-size: .8rem;
+      & a {
+        font-size: 0.8rem;
       }
     }
 
-    & .logo{
+    & .logo {
       width: 10rem;
     }
 
-    & .pokedex{
+    & .pokedex {
       width: 10rem;
       height: 2rem;
 
-        & a{
-          font-size: .9rem;
-        }
+      & a {
+        font-size: 0.9rem;
+      }
     }
   }
 
-  @media only screen and (min-width: 480px) and (max-width: 768px){
+  @media only screen and (min-width: 480px) and (max-width: 768px) {
     height: 7rem;
     padding: 0 20px;
 
-    & .logo{
+    & .logo {
       width: 12rem;
     }
 
-    & .pokedex{
+    & .pokedex {
       width: 12rem;
       height: 3.5rem;
 
-        & a{
-          font-size: 1.5rem;
-        }
+      & a {
+        font-size: 1.5rem;
+      }
     }
   }
-
-
 `;
 
 export default Header;

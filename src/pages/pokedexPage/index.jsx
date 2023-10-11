@@ -23,7 +23,7 @@ const PokedexPage = () => {
 
 const ContainerPokedex = styled.div`
   width: 100%;
-  height: auto;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: #5e5e5e;
@@ -62,7 +62,6 @@ const ContainerPokedex = styled.div`
 
 const ListaPokedex = styled.ul`
   width: 100%;
-  min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
