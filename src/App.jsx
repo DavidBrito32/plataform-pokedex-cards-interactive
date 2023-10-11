@@ -1,16 +1,15 @@
-import { HooksProvider } from "./context"
-import Ways from "./routes"
-
+import  Router  from "./routes/Router";
+import { HooksProvider } from "./context/HooksProvider";
 
 const App = () => {
 
-  return (
+  return (    
     <>
       <HooksProvider>
-        <Ways />
+        <Router />
       </HooksProvider>
     </>
   )
 }
 
-export default App
+export default App;
