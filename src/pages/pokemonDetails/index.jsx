@@ -1,19 +1,14 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { styled } from "styled-components";
 import bg from "./assets/bg.svg";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, memo } from "react";
 import { HooksContext } from "../../context/HooksProvider";
 import { useParams } from "react-router-dom";
-import { typesImage } from "../../components/CardPokemon/Support/Assets";
+import { defineImageType } from "../../components/CardPokemon/Support/Assets";
 import { useRequestData } from "../../hooks/useRequestData";
-
-import {
-  ColorCard,
-  ColorType,
-  strongCalc,
-  powerFullProgress,
-} from "../../services/Support_Functions";
+import { ColorCard, ColorType, strongCalc, powerFullProgress} from "../../services/Support_Functions";
 import LoadingStats from "../../components/loadindStats";
 
 const PokemonDetails = () => {
@@ -26,103 +21,26 @@ const PokemonDetails = () => {
   const [imageType2, setImageType2] = useState("");
   const { id } = useParams();
   const { pokeDetails } = useContext(HooksContext);
-  const { data: details, loading, error } = useRequestData(pokeDetails.url);
+  const { data: details, loading, error} = useRequestData(pokeDetails.url);
 
   useEffect(() => {
-    if (
-      details &&
-      details.types &&
-      details.types.length > 0 &&
-      details.types[0].type.name
-    ) {
+    if (details && details.types && details.types.length > 0 && details.types[0].type.name) {
       setCorDoCard(ColorCard(details.types[0].type.name));
       setCorDoTipo1(ColorType(details.types[0].type.name));
       setImageType1(defineImageType(details.types[0].type.name));
       setType1(details.types[0].type.name);
     }
 
-    if (
-      details &&
-      details.types &&
-      details.types.length > 1 &&
-      details.types[1] &&
-      details.types[1].type.name
-    ) {
+    if (details && details.types && details.types.length > 1 && details.types[1] && details.types[1].type.name) {
       setCorDoTipo2(ColorType(details.types[1].type.name));
       setImageType2(defineImageType(details.types[1].type.name));
       setType2(details.types[1].type.name);
     }
   }, [details]);
 
-  const defineImageType = (type) => {
-    switch (type.toLowerCase()) {
-      case "grass":
-        return typesImage[9];
-
-      case "poison":
-        return typesImage[13];
-
-      case "fire":
-        return typesImage[7];
-
-      case "flying":
-        return typesImage[6];
-
-      case "water":
-        return typesImage[17];
-
-      case "bug":
-        return typesImage[0];
-
-      case "normal":
-        return typesImage[12];
-
-      case "dark":
-        return typesImage[1];
-
-      case "dragon":
-        return typesImage[2];
-
-      case "electric":
-        return typesImage[3];
-
-      case "fairy":
-        return typesImage[4];
-
-      case "fighting":
-        return typesImage[5];
-
-      case "ghost":
-        return typesImage[8];
-
-      case "ground":
-        return typesImage[10];
-
-      case "ice":
-        return typesImage[11];
-
-      case "psychic":
-        return typesImage[14];
-
-      case "rock":
-        return typesImage[15];
-
-      case "steel":
-        return typesImage[16];
-
-      default:
-        return typesImage[0];
-    }
-  };
-
   let pontos = [];
-  details &&
-    details.stats.map((item) => (pontos = [...pontos, item.base_stat]));
-
+  details && details.stats.map((item) => (pontos = [...pontos, item.base_stat]));
   const powerFull = pontos.reduce((acumulador, atual) => acumulador + atual, 0);
-
-  console.log(powerFull);
-
   return (
     <>
       <ContainerDetails
@@ -273,8 +191,8 @@ const ContainerDetails = styled.div`
 
     & .pokemon {
       position: absolute;
-      top: -100px;
-      right: 0;
+      top: -110px;
+      right: -30px;
       width: 300px;
       height: 300px;
     }
@@ -303,7 +221,7 @@ const ContainerDetails = styled.div`
       z-index: 1;
 
       & .bloco {
-        width: 100%;
+        width: 282px;
         height: 45%;
         background-color: white;
         border-radius: 12px;
@@ -311,15 +229,16 @@ const ContainerDetails = styled.div`
         justify-content: center;
         align-items: center;
         & img {
-          display: block;
-          width: 250px;
-          height: 250px;
+          display: block;          
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
       }
     }
 
     & .base_stats {
-      width: 360px;
+      width: 343px;
       height: 500px;
       background-color: white;
       border-radius: 12px;
@@ -618,34 +537,23 @@ const ContainerDetails = styled.div`
 
   @media only screen and (min-width: 1025px) {
     & .pokemonInfos {
-      width: 90%;
+      width: 90vw;
       margin: 0 auto;
       gap: 10px;
       flex-wrap: nowrap;
 
       & .pokemon {
-        width: 220px;
-        height: 220px;
+        width: 270px;
+        height: 270px;
         margin: 0;
       }
 
       & .sprites {
         width: 30%;
         margin: 0;
-
-        & .bloco {
-          height: 40%;
-        }
-      }
-
-      & .base_stats {
-        width: 40%;
-        margin: 0;
       }
 
       & .poke {
-        width: 30%;
-        margin: 0;
 
         & .moves {
           padding: 10px;
@@ -706,4 +614,4 @@ const Li = styled.li`
   }
 `;
 
-export default PokemonDetails;
+export default memo(PokemonDetails);

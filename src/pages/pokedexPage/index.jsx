@@ -2,14 +2,16 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { HooksContext } from "../../context/HooksProvider";
 import CardPokemon from "../../components/CardPokemon";
+import Modal from "../../components/Modal";
 
 
 const PokedexPage = () => {
 
-  const { pokedex } = useContext(HooksContext);
+  const { pokedex,  message, removePokemon, modal, modificaModal } = useContext(HooksContext);
 
     return(
         <>
+            {message === "remover" && <Modal titulo={removePokemon.titulo} subTitulo={removePokemon.subTitle}   modal={modificaModal} active={modal} />}
             <ContainerPokedex>
               <h1>Seus Pokemons</h1>
                 <ListaPokedex>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Logo from "./assets/pokemon.svg";
 import { useContext } from "react";
 import { HooksContext } from "../../context/HooksProvider";
+import Modal from "../Modal";
 
 const Header = () => {
   const {
@@ -14,14 +15,18 @@ const Header = () => {
     pokeDetails,
     setDetailsVerify,
     btnPokemon,
-    setBtnPokemon
+    setBtnPokemon,
+    message, 
+    addPokemon, 
+    removePokemon, 
+    modal, 
+    modificaModal
   } = useContext(HooksContext);
   const mudaPage = (directory) => {
     alteraPage(directory);
     setBtnPokemon(false);
     localStorage.setItem("btnPokemon", JSON.stringify(false));
   };
-
   const excluiPokemon = (poke) => {
     delPokemon(poke);
     setDetailsVerify(!detailsVerify);
@@ -35,6 +40,10 @@ const Header = () => {
 
   return (
     <>
+      {message === "adicionar" && <Modal titulo={addPokemon.titulo} subTitulo={addPokemon.subTitle}   modal={modificaModal} active={modal} />}
+      
+      {message === "remover" && <Modal titulo={removePokemon.titulo} subTitulo={removePokemon.subTitle}   modal={modificaModal} active={modal} />}
+
       <HeaderContainer>
         <div className="home">
           {page === "pokedex" && (

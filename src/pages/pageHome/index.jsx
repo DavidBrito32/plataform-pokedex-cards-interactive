@@ -3,15 +3,18 @@ import CardPokemon from "../../components/CardPokemon";
 import { styled } from "styled-components";
 import { HooksContext } from "../../context/HooksProvider";
 import LoadingStats from "../../components/loadindStats";
+import Modal from "../../components/Modal";
 
 const PageHome = () => {
-  const { pokeLista, loading, error } = useContext(HooksContext);
+  const { pokeLista, loading, error, message, addPokemon, modal, modificaModal } = useContext(HooksContext);
 
   return (
     <>
+      {message === "adicionar" && <Modal titulo={addPokemon.titulo} subTitulo={addPokemon.subTitle}   modal={modificaModal} active={modal} />}
+      {message === "ja foi adicionado" && <Modal titulo={"Ops !"} subTitulo={"O pokemon Ja esta na Pokedex"}   modal={modificaModal} active={modal} />}
       <ContainerHome>
         <h1>Todos os Pokemons</h1>
-        <ListaPokemons>
+        <ListaPokemons>          
           {loading && <LoadingStats />}
           {error && <p>Ocorreu um erro</p>}
           {pokeLista && pokeLista.results.map((item) => <li key={item.name}><CardPokemon pokemon={item} /></li>)}

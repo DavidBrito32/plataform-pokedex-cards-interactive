@@ -7,19 +7,32 @@ import { useRequestData } from "../../hooks/useRequestData";
 export const HooksContext = createContext();
 export const HooksProvider = ({ children }) => {
   const [pokedex, setPokedex] = useState( JSON.parse(localStorage.getItem("pokedex")) || []);
+  //estado que controla o pokemon da pagina de detalhes
   const [pokeDetails, setPokeDetails] = useState(JSON.parse(localStorage.getItem("pokeDetails")) || []);
+  const [message, setMessage] = useState("");
 
+  const [addPokemon] = useState({titulo: "Gotcha!", subTitle: "O Pokémon foi adicionado a sua Pokédex"});
+
+  const [removePokemon] = useState({titulo: "Oh, no!", subTitle: "O Pokémon foi removido da sua Pokedéx"});
+
+  const [modal, setModal] = useState(false);
+
+  const modificaModal = () => {
+    setModal(!modal);
+  }
+
+  //-----------------------------------------------------------------------------------------------
   const [btnPokemon, setBtnPokemon] = useState( JSON.parse(localStorage.getItem("btnPokemon")) || false);
-
+  //-----------------------------------------------------------------------------------------------
 
   const { data: pokeLista, loading, error } = useRequestData(BASE_URL);
   //--------------- header---------------------------------
   const [page, setPage] = useState(
     JSON.parse(localStorage.getItem("page")) || "home"
-  );
+  ); 
   
   const [detailsVerify, setDetailsVerify] = useState( JSON.parse(localStorage.getItem("detailsVerify")) || false)
-
+  //--------------- header---------------------------------+
   useEffect(
     () => localStorage.setItem("page", JSON.stringify(page)),
     [page]
@@ -27,17 +40,28 @@ export const HooksProvider = ({ children }) => {
   const alteraPage = (pagina) =>{
     setPage(pagina);
   }
-  //--------------- header---------------------------------
+  //-------------------------------------------------------+
+  /* Funções do fluxo que adiciona ou remove o pokemon da pokedex */
   const addPokedex = (pokemon) => {
-    const filtrado = pokedex.find((item) => item.name === pokemon.name);
+    const filtrado = pokedex.find((item) => item.name === pokemon.name);    
     if(filtrado === undefined){
       setPokedex([...pokedex, pokemon]);
-      alert("Adicionado a pokedex")
+      modificaModal();
+      setMessage("adicionar")
     }else{
-      alert("Ja esta na pokedex")
+      modificaModal();
+      setMessage("ja foi adicionado")
     }
   }
-
+  const delPokemon = (pokemon) => {
+    const poke = pokedex.filter(item => item.name !== pokemon.name);
+    modificaModal();
+    setMessage("remover")
+    setPokedex(poke)
+    localStorage.setItem("pokedex", JSON.stringify(poke));
+  }
+  //-----------------------------------------------------------------
+  //--------------- header---------------------------------+
   useEffect(()=>{
     if(pokedex.length > 0){
       localStorage.setItem("pokedex", JSON.stringify(pokedex));
@@ -46,13 +70,6 @@ export const HooksProvider = ({ children }) => {
       localStorage.setItem("pokeDetails", JSON.stringify(pokeDetails))
     }
   }, [pokedex])
-
-  const delPokemon = (pokemon) => {
-    const poke = pokedex.filter(item => item.name !== pokemon.name);
-    setPokedex(poke)
-    localStorage.setItem("pokedex", JSON.stringify(poke));
-    alert("Excluido da pokedex")
-  }
 
   return (
     <HooksContext.Provider 
@@ -70,7 +87,12 @@ export const HooksProvider = ({ children }) => {
       setDetailsVerify,
       detailsVerify,
       btnPokemon,
-      setBtnPokemon
+      setBtnPokemon,
+      modificaModal,
+      modal,
+      addPokemon,
+      removePokemon,
+      message
       }}>
       {children}
     </HooksContext.Provider>
