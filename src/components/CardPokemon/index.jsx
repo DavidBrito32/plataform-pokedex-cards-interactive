@@ -10,10 +10,19 @@ import { typesImage } from "./Support/Assets";
 import { defineColorCard, defineColorType, convertNumber } from "./Support";
 import { HooksContext } from "../../context/HooksProvider";
 import { useRequestData } from "../../hooks/useRequestData";
+import { BASE_URL } from "../../services/Constants/BASE_URL";
 
 const CardPokemon = ({ pokemon, btn }) => {
   const { name, url } = pokemon;
   const { data: pokeInfo } = useRequestData(url);
+
+  const {data: pokeLista} = useRequestData(BASE_URL);
+
+  useEffect(()=>{
+    localStorage.setItem("pokeLista", JSON.stringify(pokeLista));
+  }, [pokeLista])
+
+
 
   const {
     addPokedex,

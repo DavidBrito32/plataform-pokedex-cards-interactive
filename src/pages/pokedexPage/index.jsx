@@ -1,13 +1,21 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { HooksContext } from "../../context/HooksProvider";
 import CardPokemon from "../../components/CardPokemon";
 import Modal from "../../components/Modal";
+import { useRequestData } from "../../hooks/useRequestData";
+import { BASE_URL } from "../../services/Constants/BASE_URL";
 
 
 const PokedexPage = () => {
 
   const { pokedex,  message, removePokemon, modal, modificaModal } = useContext(HooksContext);
+  const {data} = useRequestData(BASE_URL);
+
+  useEffect(()=>{
+    localStorage.setItem("pokeLista", JSON.stringify(data));
+  }, [data])
+
 
     return(
         <>

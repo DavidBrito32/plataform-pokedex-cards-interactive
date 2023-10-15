@@ -25,7 +25,7 @@ export const HooksProvider = ({ children }) => {
   const [btnPokemon, setBtnPokemon] = useState( JSON.parse(localStorage.getItem("btnPokemon")) || false);
   //-----------------------------------------------------------------------------------------------
   const { data, loading, error } = useRequestData(BASE_URL);
-  const pokeLista = data;
+  const pokeLista = JSON.parse(localStorage.getItem("pokeLista")) || data;
 
   //--------------- header---------------------------------
   const [page, setPage] = useState(
