@@ -9,6 +9,7 @@ export const HooksProvider = ({ children }) => {
   const [pokedex, setPokedex] = useState( JSON.parse(localStorage.getItem("pokedex")) || []);
   //estado que controla o pokemon da pagina de detalhes
   const [pokeDetails, setPokeDetails] = useState(JSON.parse(localStorage.getItem("pokeDetails")) || []);
+  //------------------------------------------------------
   const [message, setMessage] = useState("");
 
   const [addPokemon] = useState({titulo: "Gotcha!", subTitle: "O Pokémon foi adicionado a sua Pokédex"});
@@ -20,21 +21,11 @@ export const HooksProvider = ({ children }) => {
   const modificaModal = () => {
     setModal(!modal);
   }
-
   //-----------------------------------------------------------------------------------------------
   const [btnPokemon, setBtnPokemon] = useState( JSON.parse(localStorage.getItem("btnPokemon")) || false);
   //-----------------------------------------------------------------------------------------------
-
   const { data, loading, error } = useRequestData(BASE_URL);
-
-  useEffect(()=>{
-    if(data !== null){
-      localStorage.setItem("pokeLista", JSON.stringify(data));
-    }
-  },[])
-
-  const pokeLista = JSON.parse(localStorage.getItem("pokeLista")) || data;
-
+  const pokeLista = data;
 
   //--------------- header---------------------------------
   const [page, setPage] = useState(

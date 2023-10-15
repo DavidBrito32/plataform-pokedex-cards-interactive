@@ -122,6 +122,7 @@ const CardPokemon = ({ pokemon, btn }) => {
 
   const openDetails = () => {
     setPokeDetails(pokemon);
+    localStorage.setItem("pokeDetails", JSON.stringify(pokemon));
     alteraPage("pokedex");
     localStorage.setItem("pokeDetails", JSON.stringify(pokemon));
 
