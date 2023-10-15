@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import LayoutPage from '../layouts';
 import PageHome from '../pages/pageHome';
 import ErrorPage from '../pages/ErrorPage';
@@ -16,7 +16,7 @@ const Router = () => {
 
     return(
         <>
-            <BrowserRouter>
+            <HashRouter>
                 <Routes>
                     <Route path='/' element={<LayoutPage />}>
                         <Route index element={<PageHome />} />
@@ -25,7 +25,7 @@ const Router = () => {
                         <Route path='*' element={<ErrorPage />} />
                     </Route>
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
         </>
     )
 }
