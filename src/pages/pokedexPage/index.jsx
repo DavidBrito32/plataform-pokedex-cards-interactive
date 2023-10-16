@@ -10,11 +10,11 @@ import { BASE_URL } from "../../services/Constants/BASE_URL";
 const PokedexPage = () => {
 
   const { pokedex,  message, removePokemon, modal, modificaModal } = useContext(HooksContext);
-  const {data} = useRequestData(BASE_URL);
+  // const {data} = useRequestData(BASE_URL);
 
-  useEffect(()=>{
-    localStorage.setItem("pokeLista", JSON.stringify(data));
-  }, [data])
+  // useEffect(()=>{
+  //   localStorage.setItem("pokeLista", JSON.stringify(data));
+  // }, [data])
 
 
     return(

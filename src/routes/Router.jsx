@@ -9,10 +9,10 @@ import { BASE_URL } from '../services/Constants/BASE_URL';
 import { useEffect } from 'react';
 
 const Router = () => {
-    const {data: pokeLista} = useRequestData(BASE_URL);
-    useEffect(()=>{
-      localStorage.setItem("pokeLista", JSON.stringify(pokeLista));
-    }, [pokeLista]);
+    // const {data: pokeLista} = useRequestData(BASE_URL);
+    // useEffect(()=>{
+    //   localStorage.setItem("pokeLista", JSON.stringify(pokeLista));
+    // }, [pokeLista]);
 
     return(
         <>
