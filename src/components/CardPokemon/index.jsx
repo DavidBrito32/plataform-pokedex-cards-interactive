@@ -141,12 +141,14 @@ const CardPokemon = ({ pokemon, btn }) => {
       setDetailsVerify(false);
       alteraPage("pokedex");
       setBtnPokemon(true)
-      localStorage.setItem("btnPokemon", JSON.stringify(true))
+      localStorage.setItem("btnPokemon", JSON.stringify(true));
+      localStorage.setItem("detailsVerify", JSON.stringify(false));
     } else {
       setDetailsVerify(true);
       setBtnPokemon(true)
       alteraPage("pokedex");
       localStorage.setItem("btnPokemon", JSON.stringify(true))      
+      localStorage.setItem("detailsVerify", JSON.stringify(true));
     }
   };
 

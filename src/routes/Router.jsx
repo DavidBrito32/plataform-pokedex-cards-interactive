@@ -4,16 +4,8 @@ import PageHome from '../pages/pageHome';
 import ErrorPage from '../pages/ErrorPage';
 import PokedexPage from '../pages/pokedexPage';
 import PokemonDetails from '../pages/pokemonDetails';
-import { useRequestData } from '../hooks/useRequestData';
-import { BASE_URL } from '../services/Constants/BASE_URL';
-import { useEffect } from 'react';
 
 const Router = () => {
-    // const {data: pokeLista} = useRequestData(BASE_URL);
-    // useEffect(()=>{
-    //   localStorage.setItem("pokeLista", JSON.stringify(pokeLista));
-    // }, [pokeLista]);
-
     return(
         <>
             <HashRouter>

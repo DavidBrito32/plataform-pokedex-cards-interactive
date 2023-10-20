@@ -7,6 +7,7 @@ import { useRequestData } from "../../hooks/useRequestData";
 export const HooksContext = createContext();
 export const HooksProvider = ({ children }) => {
   const [pokedex, setPokedex] = useState( JSON.parse(localStorage.getItem("pokedex")) || []);
+  
   //estado que controla o pokemon da pagina de detalhes
   const [pokeDetails, setPokeDetails] = useState(JSON.parse(localStorage.getItem("pokeDetails")) || []);
   //------------------------------------------------------
@@ -31,6 +32,7 @@ export const HooksProvider = ({ children }) => {
   const [page, setPage] = useState(
     JSON.parse(localStorage.getItem("page")) || "home"
   ); 
+  
   
   const [detailsVerify, setDetailsVerify] = useState( JSON.parse(localStorage.getItem("detailsVerify")) || false)
   //--------------- header---------------------------------+

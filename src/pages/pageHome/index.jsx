@@ -6,7 +6,9 @@ import LoadingStats from "../../components/loadindStats";
 import Modal from "../../components/Modal";
 
 const PageHome = () => {
-  const { pokeLista, loading, error, message, addPokemon, modal, modificaModal } = useContext(HooksContext);
+  const { pokeLista, loading, error, message, addPokemon, modal, modificaModal, alteraPage } = useContext(HooksContext);
+
+  alteraPage("home");
 
   return (
     <>
@@ -17,14 +19,12 @@ const PageHome = () => {
         <ListaPokemons>          
           {loading && <LoadingStats />}
           {error && <p>Ocorreu um erro</p>}
-          {pokeLista && pokeLista.results.map((item) => <li key={item.name}><CardPokemon pokemon={item} /></li>)}
-          
+          {pokeLista && pokeLista.results.map((item) => <li key={item.name}><CardPokemon pokemon={item} /></li>)}          
         </ListaPokemons>
       </ContainerHome>
     </>
   );
 };
-
 const ContainerHome = styled.div`
   width: 100%;
   height: auto;
@@ -63,7 +63,6 @@ const ContainerHome = styled.div`
 
 
 `;
-
 const ListaPokemons = styled.ul`
   width: 100%;
   min-height: 100vh;
@@ -92,5 +91,4 @@ const ListaPokemons = styled.ul`
   }
 
 `;
-
 export default PageHome;

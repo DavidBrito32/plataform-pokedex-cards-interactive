@@ -1,22 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import { HooksContext } from "../../context/HooksProvider";
 import CardPokemon from "../../components/CardPokemon";
 import Modal from "../../components/Modal";
-import { useRequestData } from "../../hooks/useRequestData";
-import { BASE_URL } from "../../services/Constants/BASE_URL";
-
 
 const PokedexPage = () => {
-
   const { pokedex,  message, removePokemon, modal, modificaModal } = useContext(HooksContext);
-  // const {data} = useRequestData(BASE_URL);
-
-  // useEffect(()=>{
-  //   localStorage.setItem("pokeLista", JSON.stringify(data));
-  // }, [data])
-
-
     return(
         <>
             {message === "remover" && <Modal titulo={removePokemon.titulo} subTitulo={removePokemon.subTitle}   modal={modificaModal} active={modal} />}
@@ -29,8 +18,6 @@ const PokedexPage = () => {
         </>
     );
 };
-
-
 const ContainerPokedex = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -69,7 +56,6 @@ const ContainerPokedex = styled.div`
 
 
 `;
-
 const ListaPokedex = styled.ul`
   width: 100%;
   display: flex;
@@ -97,5 +83,4 @@ const ListaPokedex = styled.ul`
   }
 
 `;
-
 export default PokedexPage;
