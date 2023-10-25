@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import CardPokemon from "../../components/CardPokemon";
 import { styled } from "styled-components";
 import { HooksContext } from "../../context/HooksProvider";
@@ -6,9 +6,17 @@ import LoadingStats from "../../components/loadindStats";
 import Modal from "../../components/Modal";
 
 const PageHome = () => {
-  const { pokeLista, loading, error, message, addPokemon, modal, modificaModal, alteraPage } = useContext(HooksContext);
+  const { pokeLista, loading, error, message, addPokemon, modal, modificaModal, alteraPage, pokedex } = useContext(HooksContext);
+  useEffect(()=>{
+    alteraPage("home");
+  }, []);
 
-  alteraPage("home");
+  const filteredPokelist = pokeLista &&  pokeLista.results.filter(
+    (pokemonInList) =>
+      !pokedex.find(
+        (pokemonInPokedex) => pokemonInList.name === pokemonInPokedex.name
+      )
+  );
 
   return (
     <>
@@ -19,7 +27,7 @@ const PageHome = () => {
         <ListaPokemons>          
           {loading && <LoadingStats />}
           {error && <p>Ocorreu um erro</p>}
-          {pokeLista && pokeLista.results.map((item) => <li key={item.name}><CardPokemon pokemon={item} /></li>)}          
+          {filteredPokelist && filteredPokelist.map((item) => <li key={item.name}><CardPokemon pokemon={item} /></li>)}          
         </ListaPokemons>
       </ContainerHome>
     </>

@@ -38,6 +38,8 @@ const PokemonDetails = () => {
     }
   }, [details]);
 
+  
+
   let pontos = [];
   details && details.stats.map((item) => (pontos = [...pontos, item.base_stat]));
   const powerFull = pontos.reduce((acumulador, atual) => acumulador + atual, 0);
@@ -596,6 +598,7 @@ const Li = styled.li`
     overflow: hidden;
     border-radius: 12px;
     transition-duration: 400ms;
+    transition-delay: 3s;
     background-color: #5e5e5e25;
 
     & .status {
@@ -604,6 +607,7 @@ const Li = styled.li`
       border-radius: 12px;
       background-color: ${(props) => strongCalc(props.$barra)};
       height: 100%;
+      transition-delay: 3s;
       transition-duration: 400ms;
 
       &.total {
