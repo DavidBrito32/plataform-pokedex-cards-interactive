@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import { HooksContext } from "../../context/HooksProvider";
 import LoadingStats from "../../components/loadindStats";
 import Modal from "../../components/Modal";
+import { motion } from "framer-motion";
 
 const PageHome = () => {
   const { pokeLista, loading, error, message, addPokemon, modal, modificaModal, alteraPage, pokedex } = useContext(HooksContext);
@@ -22,6 +23,11 @@ const PageHome = () => {
     <>
       {message === "adicionar" && <Modal titulo={addPokemon.titulo} subTitulo={addPokemon.subTitle}   modal={modificaModal} active={modal} />}
       {message === "ja foi adicionado" && <Modal titulo={"Ops !"} subTitulo={"O pokemon Ja esta na Pokedex"}   modal={modificaModal} active={modal} />}
+    <motion.div
+      initial={{opacity: 0}}
+      animate={{opacity: 1}}
+      exit={{opacity: 0}}
+    >
       <ContainerHome>
         <h1>Todos os Pokemons</h1>
         <ListaPokemons>          
@@ -30,6 +36,7 @@ const PageHome = () => {
           {filteredPokelist && filteredPokelist.map((item) => <li key={item.name}><CardPokemon pokemon={item} /></li>)}          
         </ListaPokemons>
       </ContainerHome>
+    </motion.div>
     </>
   );
 };

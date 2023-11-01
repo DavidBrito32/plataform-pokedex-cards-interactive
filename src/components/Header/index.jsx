@@ -16,11 +16,11 @@ const Header = () => {
     setDetailsVerify,
     btnPokemon,
     setBtnPokemon,
-    message, 
-    addPokemon, 
-    removePokemon, 
-    modal, 
-    modificaModal
+    message,
+    addPokemon,
+    removePokemon,
+    modal,
+    modificaModal,
   } = useContext(HooksContext);
   const mudaPage = (directory) => {
     alteraPage(directory);
@@ -40,9 +40,23 @@ const Header = () => {
 
   return (
     <>
-      {message === "adicionar" && <Modal titulo={addPokemon.titulo} subTitulo={addPokemon.subTitle}   modal={modificaModal} active={modal} />}
-      
-      {message === "remover" && <Modal titulo={removePokemon.titulo} subTitulo={removePokemon.subTitle}   modal={modificaModal} active={modal} />}
+      {message === "adicionar" && (
+        <Modal
+          titulo={addPokemon.titulo}
+          subTitulo={addPokemon.subTitle}
+          modal={modificaModal}
+          active={modal}
+        />
+      )}
+
+      {message === "remover" && (
+        <Modal
+          titulo={removePokemon.titulo}
+          subTitulo={removePokemon.subTitle}
+          modal={modificaModal}
+          active={modal}
+        />
+      )}
 
       <HeaderContainer>
         <div className="home">
@@ -66,11 +80,18 @@ const Header = () => {
           )}
 
           {btnPokemon && detailsVerify && (
-            <Link className="excluir" onClick={() => excluiPokemon(pokeDetails)}>Excluir</Link>
+            <Link
+              className="excluir"
+              onClick={() => excluiPokemon(pokeDetails)}
+            >
+              Excluir
+            </Link>
           )}
 
           {btnPokemon && !detailsVerify && (
-            <Link className="adicionar" onClick={() => AddPokemon(pokeDetails)}>Adicionar</Link>
+            <Link className="adicionar" onClick={() => AddPokemon(pokeDetails)}>
+              Adicionar
+            </Link>
           )}
         </div>
       </HeaderContainer>
@@ -147,13 +168,13 @@ const HeaderContainer = styled.header`
         scale: 0.97;
       }
 
-      &.adicionar{
+      &.adicionar {
         transition-duration: 400ms;
         background-color: #529600;
         transition-delay: 100ms;
       }
 
-      &.excluir{
+      &.excluir {
         transition-duration: 400ms;
         background-color: red;
         transition-delay: 100ms;

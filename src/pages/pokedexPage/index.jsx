@@ -3,20 +3,40 @@ import styled from "styled-components";
 import { HooksContext } from "../../context/HooksProvider";
 import CardPokemon from "../../components/CardPokemon";
 import Modal from "../../components/Modal";
+import { motion } from "framer-motion";
 
 const PokedexPage = () => {
-  const { pokedex,  message, removePokemon, modal, modificaModal } = useContext(HooksContext);
-    return(
-        <>
-            {message === "remover" && <Modal titulo={removePokemon.titulo} subTitulo={removePokemon.subTitle}   modal={modificaModal} active={modal} />}
-            <ContainerPokedex>
-              <h1>Seus Pokemons</h1>
-                <ListaPokedex>
-                   {pokedex && pokedex.map((item) => <li key={item.name}><CardPokemon pokemon={item} btn={true} /></li>)} 
-                </ListaPokedex>
-            </ContainerPokedex>
-        </>
-    );
+  const { pokedex, message, removePokemon, modal, modificaModal } =
+    useContext(HooksContext);
+  return (
+    <>
+      {message === "remover" && (
+        <Modal
+          titulo={removePokemon.titulo}
+          subTitulo={removePokemon.subTitle}
+          modal={modificaModal}
+          active={modal}
+        />
+      )}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <ContainerPokedex>
+          <h1>Seus Pokemons</h1>
+          <ListaPokedex>
+            {pokedex &&
+              pokedex.map((item) => (
+                <li key={item.name}>
+                  <CardPokemon pokemon={item} btn={true} />
+                </li>
+              ))}
+          </ListaPokedex>
+        </ContainerPokedex>
+      </motion.div>
+    </>
+  );
 };
 const ContainerPokedex = styled.div`
   width: 100%;
@@ -35,26 +55,23 @@ const ContainerPokedex = styled.div`
     transition-duration: 400ms;
   }
 
-  @media only screen and (max-width: 480px){
+  @media only screen and (max-width: 480px) {
     padding: 0 10px;
 
-    & h1{
+    & h1 {
       font-size: 1.3rem;
       margin: 30px 0;
     }
   }
 
-  @media only screen and (min-width: 480px) and (max-width: 768px){
+  @media only screen and (min-width: 480px) and (max-width: 768px) {
     padding: 0 5px;
 
-      & h1{
-        font-size: 1.8rem;
-        margin: 30px 0;
-      }
-
+    & h1 {
+      font-size: 1.8rem;
+      margin: 30px 0;
+    }
   }
-
-
 `;
 const ListaPokedex = styled.ul`
   width: 100%;
@@ -67,20 +84,17 @@ const ListaPokedex = styled.ul`
     height: 230px;
   }
 
-  @media only screen and (max-width: 480px){
-
-    & li{
+  @media only screen and (max-width: 480px) {
+    & li {
       width: 100%;
     }
-    
   }
 
-  @media only screen and (min-width: 480px) and (max-width: 768px){
+  @media only screen and (min-width: 480px) and (max-width: 768px) {
     gap: 5px;
-    & li{
+    & li {
       width: 48%;
     }
   }
-
 `;
 export default PokedexPage;

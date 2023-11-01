@@ -10,6 +10,7 @@ import { defineImageType } from "../../components/CardPokemon/Support/Assets";
 import { useRequestData } from "../../hooks/useRequestData";
 import { ColorCard, ColorType, strongCalc, powerFullProgress} from "../../services/Support_Functions";
 import LoadingStats from "../../components/loadindStats";
+import { motion } from "framer-motion";
 
 const PokemonDetails = () => {
   const [corDoCard, setCorDoCard] = useState("");
@@ -45,6 +46,12 @@ const PokemonDetails = () => {
   const powerFull = pontos.reduce((acumulador, atual) => acumulador + atual, 0);
   return (
     <>
+    <motion.div
+      initial={{opacity: 0}}
+      animate={{opacity: 1}}
+      exit={{opacity: 0}}
+    >
+    
       <ContainerDetails
         $colorCard={corDoCard}
         $type1={corDoTipo1}
@@ -138,6 +145,7 @@ const PokemonDetails = () => {
           </>
         )}
       </ContainerDetails>
+      </motion.div>
     </>
   );
 };
