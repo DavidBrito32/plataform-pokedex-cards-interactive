@@ -1,5 +1,5 @@
 export const defineColorCard = (type) => {
-  switch (type.toLowerCase()) {
+  switch (type) {
     case "grass":
       return "#729F92";
 
@@ -58,9 +58,8 @@ export const defineColorCard = (type) => {
       return "#333333";
   }
 };
-
 export const defineColorType = (type) => {
-  switch (type.toLowerCase()) {
+  switch (type) {
     case "grass":
       return "#70B873";
 
@@ -119,13 +118,46 @@ export const defineColorType = (type) => {
       return "#333333";
   }
 };
-
-export const convertNumber = (number) => {
+export const convertIdImage = (number) => {
   if (number > 0 && number < 10) {
     return `00${number}`;
   } else if (number >= 10 && number <= 99) {
     return `0${number}`;
   } else {
     return number;
+  }
+};
+export const strongCalc = (number) => {
+  if (number > 0 && number <= 20) {
+    return "#FC0200";
+  } else if (number > 20 && number <= 30) {
+    return "#FF5609";
+  } else if (number > 30 && number <= 40) {
+    return "#FC900A";
+  } else if (number > 40 && number <= 60) {
+    return "#FCC802";
+  } else if (number > 60 && number <= 80) {
+    return "#C8FD03";
+  } else if (number > 80 && number <= 90) {
+    return "#88FF03";
+  } else if (number > 90) {
+    return "#2BFE03";
+  }
+};
+export const powerFullProgress = (number) => {
+  if (number > 99 && number <= 200) {
+    return "#FC0200";
+  } else if (number > 200 && number <= 300) {
+    return "#FF5609";
+  } else if (number > 303 && number <= 400) {
+    return "#FC900A";
+  } else if (number > 400 && number <= 600) {
+    return "#FCC802";
+  } else if (number > 600 && number <= 800) {
+    return "#C8FD03";
+  } else if (number > 800 && number <= 900) {
+    return "#88FF03";
+  } else if (number > 900) {
+    return "#2BFE03";
   }
 };

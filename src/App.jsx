@@ -1,17 +1,20 @@
-import  Router  from "./routes/Router";
-import { HooksProvider } from "./context/HooksProvider";
-import {HashRouter} from 'react-router-dom';
+import Router from "./routes/Router"
+import { PokeStatsProvider } from "./context/Pokemon_states";
+import { HashRouter } from "react-router-dom";
+
+
 const App = () => {
 
-  return (    
-    <>
-    <HashRouter>
-      <HooksProvider>
-        <Router />
-      </HooksProvider>
-    </HashRouter>
+  return (
+    <>  
+      <PokeStatsProvider>
+        <HashRouter>
+          <Router />
+        </HashRouter>
+      </PokeStatsProvider>
+
     </>
   )
 }
 
-export default App;
+export default App

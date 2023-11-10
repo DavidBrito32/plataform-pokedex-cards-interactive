@@ -1,5 +1,5 @@
-import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
 import { createGlobalStyle } from 'styled-components';
 
 export const Estilo = createGlobalStyle`
@@ -12,11 +12,12 @@ export const Estilo = createGlobalStyle`
     outline: none;
     font-family: 'Poppins', sans-serif;
   }
+
 `;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
     <Estilo />
     <App />
-  </>
-);
+  </>,
+)

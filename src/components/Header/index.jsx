@@ -1,97 +1,50 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import Logo from "./assets/pokemon.svg";
+/* eslint-disable no-unused-vars */
+import { styled } from "styled-components";
+import Logo from "./assets/logo.svg";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FiChevronLeft } from "react-icons/fi";
+import { goToHome, goToPokedex } from "../../routes/Cordinators";
 import { useContext } from "react";
-import { HooksContext } from "../../context/HooksProvider";
-import Modal from "../Modal";
+import { PokeStatsContext } from "../../context/Pokemon_states";
 
 const Header = () => {
-  const {
-    page,
-    alteraPage,
-    detailsVerify,
-    addPokedex,
-    delPokemon,
-    pokeDetails,
-    setDetailsVerify,
-    btnPokemon,
-    setBtnPokemon,
-    message,
-    addPokemon,
-    removePokemon,
-    modal,
-    modificaModal,
-  } = useContext(HooksContext);
-  const mudaPage = (directory) => {
-    alteraPage(directory);
-    setBtnPokemon(false);
-    localStorage.setItem("btnPokemon", JSON.stringify(false));
-  };
-  const excluiPokemon = (poke) => {
-    delPokemon(poke);
-    setDetailsVerify(!detailsVerify);
-    localStorage.setItem("detailsVerify", JSON.stringify(false));
-  };
-  const AddPokemon = (poke) => {
-    addPokedex(poke);
-    setDetailsVerify(!detailsVerify);
-    localStorage.setItem("detailsVerify", JSON.stringify(true));
-  };
+  const { pokedex, details, addPokemon, removePokemon } =
+    useContext(PokeStatsContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const btn = pokedex.find((item) => item.name === details.name);
 
   return (
     <>
-      {message === "adicionar" && (
-        <Modal
-          titulo={addPokemon.titulo}
-          subTitulo={addPokemon.subTitle}
-          modal={modificaModal}
-          active={modal}
-        />
-      )}
-
-      {message === "remover" && (
-        <Modal
-          titulo={removePokemon.titulo}
-          subTitulo={removePokemon.subTitle}
-          modal={modificaModal}
-          active={modal}
-        />
-      )}
-
       <HeaderContainer>
-        <div className="home">
-          {page === "pokedex" && (
-            <Link to={"/"} onClick={() => mudaPage("home")}>
-              {" "}
-              <span></span> Todos os Pokémons
-            </Link>
+        <div className="botao">
+          {location.pathname === "/pokedex" && (
+            <h3 onClick={() => goToHome(navigate)}>
+              <FiChevronLeft /> Todos os Pokémons
+            </h3>
+          )}
+          {location.pathname.includes("/pokemon") && (
+            <h3 onClick={() => goToHome(navigate)}>
+              <FiChevronLeft /> Todos os Pokémons
+            </h3>
           )}
         </div>
 
         <div className="logo">
-          <img src={Logo} alt="Logo_Pokemon" />
+          <img src={Logo} alt="Logo Pokedex" />
         </div>
 
-        <div className="pokedex">
-          {page === "home" && (
-            <Link onClick={() => mudaPage("pokedex")} to={"/pokedex"}>
-              Pokédex
-            </Link>
+        <div className="botao">
+          {location.pathname === "/" && (
+            <button onClick={() => goToPokedex(navigate)}>pokedex</button>
           )}
-
-          {btnPokemon && detailsVerify && (
-            <Link
-              className="excluir"
-              onClick={() => excluiPokemon(pokeDetails)}
-            >
+          {location.pathname.includes("/pokemon") && btn !== undefined && (
+            <button className="excluir" onClick={() => removePokemon(details)}>
               Excluir
-            </Link>
+            </button>
           )}
-
-          {btnPokemon && !detailsVerify && (
-            <Link className="adicionar" onClick={() => AddPokemon(pokeDetails)}>
-              Adicionar
-            </Link>
+          {location.pathname.includes("/pokemon") && btn === undefined && (
+            <button onClick={() => addPokemon(details)}>Adicionar</button>
           )}
         </div>
       </HeaderContainer>
@@ -100,128 +53,114 @@ const Header = () => {
 };
 
 const HeaderContainer = styled.header`
-  width: 100%;
-  height: 10rem;
+  height: 160px;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 41px 0 71px;
   position: sticky;
   top: 0;
-  z-index: 15;
-  background-color: white;
+  padding: 0 40px 0 74px;
+  transition-duration: 400ms;
+  z-index: 10;
 
-  & .home {
-    width: 12.5rem;
-
-    & a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
+  & .botao {
+    transition-duration: 400ms;
+    & h3 {
+      font-weight: 700;
+      font-size: 24px;
       text-decoration: underline;
-      text-underline-offset: 2px;
-
-      & span {
-        width: 7px;
-        height: 7px;
-        border-bottom: 2px solid black;
-        border-left: 2px solid black;
-        transform: rotate(45deg);
-      }
-    }
-  }
-
-  & .logo {
-    width: 19.2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    & img {
-      display: block;
-      width: 100%;
-      object-fit: contain;
-    }
-  }
-
-  & .pokedex {
-    width: 18rem;
-    height: 4.7rem;
-
-    & a {
-      width: 100%;
-      height: 100%;
+      color: black;
       display: flex;
-      justify-content: center;
       align-items: center;
+      cursor: pointer;
+      transition-duration: 400ms;
+    }
+
+    & button {
+      font-size: 24px;
+      font-weight: normal;
+      line-height: 36px;
+      padding: 20px 90px;
+      border: none;
       border-radius: 8px;
       background-color: #33a4f5;
-      font-weight: 700;
-      font-size: 1.8rem;
-      line-height: 36px;
       color: white;
+      cursor: pointer;
       transition-duration: 400ms;
-      &:hover {
-        background-color: #1f8cd9;
+      &.excluir {
+        background-color: #ff6262;
+        &:hover {
+          background-color: #9c4a4a;
+        }
       }
+
+      &:hover {
+        background-color: #248cd6;
+      }
+
+      &.del {
+        background-color: #ff6262;
+        color: white;
+        font-weight: 400;
+
+        &:hover {
+          background-color: #e64949;
+        }
+      }
+
       &:active {
         scale: 0.97;
       }
-
-      &.adicionar {
-        transition-duration: 400ms;
-        background-color: #529600;
-        transition-delay: 100ms;
-      }
-
-      &.excluir {
-        transition-duration: 400ms;
-        background-color: red;
-        transition-delay: 100ms;
-      }
     }
   }
 
+  & img {
+    width: 308px;
+    height: 113px;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   @media only screen and (max-width: 480px) {
-    height: 5rem;
-    padding: 0 10px;
-    gap: 20px;
+    padding: 0 5px;
+    height: 100px;
+    border: 1px solid black;
+    & img {
+      width: 35%;
+    }
 
-    & .home {
-      width: 8rem;
-      & a {
-        font-size: 0.8rem;
+    & .botao {
+      & h3 {
+        width: 100px;
+        font-size: 14px;
       }
-    }
 
-    & .logo {
-      width: 10rem;
-    }
-
-    & .pokedex {
-      width: 10rem;
-      height: 2rem;
-
-      & a {
-        font-size: 0.9rem;
+      & button {
+        font-size: 14px;
+        padding: 5px 15px;
       }
     }
   }
 
   @media only screen and (min-width: 480px) and (max-width: 768px) {
-    height: 7rem;
-    padding: 0 20px;
-
-    & .logo {
-      width: 12rem;
+    padding: 20px 10px;
+    & img {
+      width: 35%;
     }
 
-    & .pokedex {
-      width: 12rem;
-      height: 3.5rem;
+    & .botao {
+      & h3 {
+        width: 220px;
+        font-size: 1.3rem;
+      }
 
-      & a {
-        font-size: 1.5rem;
+      & button {
+        padding: 10px 25px;
+        font-size: 16px;
       }
     }
   }

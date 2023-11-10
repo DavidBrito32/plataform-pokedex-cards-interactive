@@ -1,21 +1,21 @@
-import Bug from "./Bug.svg";
-import Dark from "./Dark.svg";
-import Dragon from "./Dragon.svg";
-import Eletric from "./Eletric.svg";
-import Fairy from "./Fairy.svg";
-import Fighting from "./Fighting.svg";
-import Flying from "./Flying.svg";
-import Fire from "./Fire.svg";
-import Ghost from "./Ghost.svg";
-import Grass from "./Grass.svg";
-import Ground from "./Ground.svg";
-import Ice from "./Ice.svg";
-import Normal from "./Normal.svg";
-import Poison from "./Poison.svg";
-import Psychic from "./Psychic.svg";
-import Rock from "./Rock.svg";
-import Steel from "./Steel.svg";
-import Water from "./Water.svg";
+import Bug from "./assets/Bug.svg";
+import Dark from "./assets/Dark.svg";
+import Dragon from "./assets/Dragon.svg";
+import Eletric from "./assets/Eletric.svg";
+import Fairy from "./assets/Fairy.svg";
+import Fighting from "./assets/Fighting.svg";
+import Flying from "./assets/Flying.svg";
+import Fire from "./assets/Fire.svg";
+import Ghost from "./assets/Ghost.svg";
+import Grass from "./assets/Grass.svg";
+import Ground from "./assets/Ground.svg";
+import Ice from "./assets/Ice.svg";
+import Normal from "./assets/Normal.svg";
+import Poison from "./assets/Poison.svg";
+import Psychic from "./assets/Psychic.svg";
+import Rock from "./assets/Rock.svg";
+import Steel from "./assets/Steel.svg";
+import Water from "./assets/Water.svg";
 
 export const typesImage = [
   Bug,
@@ -39,7 +39,7 @@ export const typesImage = [
 ];
 
 export const defineImageType = (type) => {
-  switch (type.toLowerCase()) {
+  switch (type) {
     case "grass":
       return typesImage[9];
 

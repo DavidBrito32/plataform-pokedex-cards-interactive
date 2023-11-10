@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 const ErrorPage = () => {
     return (
         <>
-            <h1>Error Page</h1>
-            <Link to={"/"}>Voltar a segurança</Link>
+            <h1>Ocorreu um erro!</h1>
+            <Link to="/">Voltar pra home</Link>
         </>
     )
 }
