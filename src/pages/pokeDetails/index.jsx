@@ -14,10 +14,11 @@ import {
 import Loading from "../../components/Loading";
 
 import { motion } from "framer-motion";
+import Modal from "../../components/Modal";
 
 const PokeDetails = () => {
   const { name } = useParams();
-  const { details } = useContext(PokeStatsContext);
+  const { details, modal, mensagem, mudaModal } = useContext(PokeStatsContext);
   const { data, loading, error } = useAxios(details.url);
 
   let pontos = [];
@@ -36,6 +37,13 @@ const PokeDetails = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
+        {modal && mensagem === 1 && (
+          <Modal fecharModal={mudaModal} mensagem={mensagem} />
+        )}
+        
+        {modal && mensagem === 2 && (
+          <Modal fecharModal={mudaModal} mensagem={mensagem} />
+        )}
       <ContainerDetails
         $bg={defineColorCard(
           data.types && data.types[0] && data.types[0].type.name
