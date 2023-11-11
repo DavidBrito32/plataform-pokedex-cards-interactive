@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { styled } from "styled-components";
 import Logo from "./assets/logo.svg";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FiChevronLeft } from "react-icons/fi";
 import { goToHome, goToPokedex } from "../../routes/Cordinators";
 import { useContext } from "react";
