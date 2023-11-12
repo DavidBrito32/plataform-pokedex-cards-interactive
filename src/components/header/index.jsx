@@ -128,7 +128,6 @@ const HeaderContainer = styled.header`
   @media only screen and (max-width: 480px) {
     padding: 0 5px;
     height: 100px;
-    border: 1px solid black;
     & img {
       width: 35%;
     }
