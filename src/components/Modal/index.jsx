@@ -5,8 +5,8 @@ import styled from "styled-components";
 const Modal = ({ mensagem, fecharModal }) => {
   return (
     <>
-      <ModalContainer onClick={fecharModal}>
-        <div className="mensagem">
+      <ModalContainer onClick={() => fecharModal()}>
+        <div className="mensagem" onClick={fecharModal}>
           {mensagem === 1 && (
             <>
               <h1>Gotcha!</h1>
@@ -33,7 +33,7 @@ const ModalContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 100;
   top: 0;
 
   & .mensagem {

@@ -14,6 +14,7 @@ export const PokeStatsProvider = ({ children }) => {
   );
   /* MODAL */
   const [modal, setModal] = useState(false);
+
   const mudaModal = () => setModal(!modal);
   const [mensagem, setMensagem] = useState("");
 /* ------------------------------------------------------ */

@@ -18,7 +18,7 @@ import Modal from "../../components/Modal";
 
 const PokeDetails = () => {
   const { name } = useParams();
-  const { details, modal, mensagem, mudaModal } = useContext(PokeStatsContext);
+  const { details, modal, mudaModal, mensagem } = useContext(PokeStatsContext);
   const { data, loading, error } = useAxios(details.url);
 
   let pontos = [];
@@ -37,124 +37,122 @@ const PokeDetails = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        {modal && mensagem === 1 && (
+        {modal && (mensagem === 1 || mensagem === 2) && (
           <Modal fecharModal={mudaModal} mensagem={mensagem} />
         )}
-        
-        {modal && mensagem === 2 && (
-          <Modal fecharModal={mudaModal} mensagem={mensagem} />
-        )}
-      <ContainerDetails
-        $bg={defineColorCard(
-          data.types && data.types[0] && data.types[0].type.name
-        )}
-        $tipo1={defineColorType(
-          data.types && data.types[0] && data.types[0].type.name
-        )}
-        $tipo2={defineColorType(
-          data.types && data.types[1] && data.types[1].type.name
-        )}
-      >
-        <h1>Detalhes</h1>
-        {loading && <Loading />}
-        {error && (
-          <h1>
-            Ocorreu um Erro ao Recarregar as Informações <span>{error}</span>
-          </h1>
-        )}
-        <div className="infos">
-          <img className={"bg-details"} src={bg} alt="pokebola" />
-          {data &&
-            data.sprites &&
-            data.sprites.other.dream_world.front_default && (
-              <img
-                className={"details-pokemon"}
-                src={data.sprites.other.dream_world.front_default}
-                alt="pokemon"
-              />
-            )}
-          <div className="sprites">
-            <div className="sprite">
-              {data && data.sprites && data.sprites.versions && (
+        <ContainerDetails
+          $bg={defineColorCard(
+            data.types && data.types[0] && data.types[0].type.name
+          )}
+          $tipo1={defineColorType(
+            data.types && data.types[0] && data.types[0].type.name
+          )}
+          $tipo2={defineColorType(
+            data.types && data.types[1] && data.types[1].type.name
+          )}
+        >
+          <h1>Detalhes</h1>
+          {loading && <Loading />}
+          {error && (
+            <h1>
+              Ocorreu um Erro ao Recarregar as Informações <span>{error}</span>
+            </h1>
+          )}
+          <div className="infos">
+            <img className={"bg-details"} src={bg} alt="pokebola" />
+            {data &&
+              data.sprites &&
+              data.sprites.other.dream_world.front_default && (
                 <img
-                  src={
-                    data.sprites.versions["generation-v"]["black-white"]
-                      .animated.front_default
-                  }
-                  alt="imagem"
+                  className={"details-pokemon"}
+                  src={data.sprites.other.dream_world.front_default}
+                  alt="pokemon"
                 />
               )}
+            <div className="sprites">
+              <div className="sprite">
+                {data && data.sprites && data.sprites.versions && (
+                  <img
+                    src={
+                      data.sprites.versions["generation-v"]["black-white"]
+                        .animated.front_default
+                    }
+                    alt="imagem"
+                  />
+                )}
+              </div>
+              <div className="sprite">
+                {data && data.sprites && data.sprites.versions && (
+                  <img
+                    src={
+                      data.sprites.versions["generation-v"]["black-white"]
+                        .animated.back_default
+                    }
+                    alt="imagem"
+                  />
+                )}
+              </div>
             </div>
-            <div className="sprite">
-              {data && data.sprites && data.sprites.versions && (
-                <img
-                  src={
-                    data.sprites.versions["generation-v"]["black-white"]
-                      .animated.back_default
-                  }
-                  alt="imagem"
-                />
-              )}
+
+            <div className="base_status">
+              <h3>Base stats</h3>
+              <ul>
+                {data &&
+                  data.stats &&
+                  data.stats.map((item, i) => (
+                    <Li key={i} $nivel={item.base_stat}>
+                      <h4>{item.stat.name}</h4> <span>{item.base_stat}</span>
+                      <div className="progresso">
+                        <div className="largura"></div>
+                      </div>
+                    </Li>
+                  ))}
+                <Li $pontos={pontosTotais && pontosTotais}>
+                  <h4>Total</h4>
+                  <span>{pontosTotais}</span>
+                  <div className="progresso">
+                    <div className="largura total"></div>
+                  </div>
+                </Li>
+              </ul>
             </div>
-          </div>
 
-          <div className="base_status">
-            <h3>Base stats</h3>
-            <ul>
-              {data &&
-                data.stats &&
-                data.stats.map((item, i) => (
-                  <Li key={i} $nivel={item.base_stat}>
-                    <h4>{item.stat.name}</h4> <span>{item.base_stat}</span>
-                    <div className="progresso">
-                      <div className="largura"></div>
-                    </div>
-                  </Li>
-                ))}
-              <Li $pontos={pontosTotais && pontosTotais}>
-                <h4>Total</h4>
-                <span>{pontosTotais}</span>
-                <div className="progresso">
-                  <div className="largura total"></div>
-                </div>
-              </Li>
-            </ul>
-          </div>
-
-          <div className="detalhes">
-            <h3>{"#001"}</h3>
-            <h1>{name}</h1>
-            <div className="types-details">
-              <span className="tipo1">
-                <img
-                  src={defineImageType(
-                    data.types && data.types[0] && data.types[0].type.name
-                  )}
-                  alt="tipo do pokemon"
-                />
-                {data.types && data.types[0] && data.types[0].type.name}
-              </span>
-              {data && data.types && data.types.length > 1 && (
-                <span className="tipo2">
+            <div className="detalhes">
+              <h3>{"#001"}</h3>
+              <h1>{name}</h1>
+              <div className="types-details">
+                <span className="tipo1">
                   <img
                     src={defineImageType(
-                      data.types && data.types[1] && data.types[1].type.name
+                      data.types && data.types[0] && data.types[0].type.name
                     )}
                     alt="tipo do pokemon"
                   />
-                  {data.types && data.types[1] && data.types[1].type.name}
+                  {data.types && data.types[0] && data.types[0].type.name}
                 </span>
-              )}
+                {data && data.types && data.types.length > 1 && (
+                  <span className="tipo2">
+                    <img
+                      src={defineImageType(
+                        data.types && data.types[1] && data.types[1].type.name
+                      )}
+                      alt="tipo do pokemon"
+                    />
+                    {data.types && data.types[1] && data.types[1].type.name}
+                  </span>
+                )}
+              </div>
+              <ul>
+                <h2>Moves:</h2>
+                {data &&
+                  data.moves &&
+                  data.moves.map((item, i) => (
+                    <li key={i}>{item.move.name}</li>
+                  ))}
+              </ul>
             </div>
-            <ul>
-              <h2>Moves:</h2>
-              {data &&
-                data.moves &&
-                data.moves.map((item, i) => <li key={i}>{item.move.name}</li>)}
-            </ul>
           </div>
-        </div>
-      </ContainerDetails>
+        </ContainerDetails>
       </motion.div>
     </>
   );

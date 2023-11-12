@@ -19,6 +19,8 @@ const HomePage = () => {
           (pokemonInPokedex) => pokemonInList.name === pokemonInPokedex.name
         )
     );
+
+  console.log(pokemonFiltrado);
   return (
     <>
       <motion.div
@@ -66,7 +68,7 @@ const ContainerHome = styled.main`
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
-    transition-duration: 500ms;
+    transition-duration: 400ms;
 
     & li {
       width: 440px;

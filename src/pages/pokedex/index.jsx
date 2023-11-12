@@ -53,7 +53,6 @@ const ContainerPokedex = styled.main`
     flex-wrap: wrap;
     gap: 20px;
     transition-duration: 400ms;
-    overflow: hidden;
 
     & li {
       width: 440px;
